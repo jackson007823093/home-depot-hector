@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Home Depot Garden Center Guide</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,10 +13,10 @@
 <!-- ORANGE BRAND BAR -->
 <header class="brand-bar">#1 Home Improvement Retailer</header>
 
-<!-- LOGO -->
+<!-- LOGO (clickable, opens Home Depot homepage) -->
 <div class="logo-container">
   <a href="https://www.homedepot.com" target="_blank" aria-label="Go to Home Depot homepage">
-    <img id="logo" src="home-depot-logo.png" alt="The Home Depot Logo">
+    <img id="logo" src="home-depot-logo.png.jpg" alt="The Home Depot Logo">
   </a>
 </div>
 
@@ -23,12 +25,7 @@
   <h1>Garden Center Plant Guide</h1>
   <p class="subtitle">Meet Hector Nectar, your hummingbird plant guide</p>
 
-  <img class="hector"
-       src="hector-hummingbird.png.jpg"
-       alt="Hector the Hummingbird"
-       onclick="playHectorVoice()">
-
-  <audio id="hectorVoice" src="luvvoice.com-20260210-6lsylk.mp3"></audio>
+  <img class="hector" id="hectorBird" src="hector-hummingbird.png.jpg" alt="Hector the Hummingbird">
 
   <div id="hectorText" class="speech-bubble">
     Tap a plant below to learn how to glow up your garden.
@@ -42,7 +39,7 @@
   <button onclick="filterPlants('shade')">Partial Shade</button>
 </section>
 
-<!-- PLANT BUTTONS -->
+<!-- PLANT SELECTION BUTTONS -->
 <section class="plant-buttons">
   <button data-sun="sun" onclick="showPlant('beebalm', event)">Bee Balm</button>
   <button data-sun="sun" onclick="showPlant('salvia', event)">Salvia</button>
@@ -53,7 +50,7 @@
   <button data-sun="shade" onclick="showPlant('cardinal', event)">Cardinal Flower</button>
 </section>
 
-<!-- INFO CARD -->
+<!-- PLANT INFO CARD -->
 <section class="info-section">
   <div id="plantCard" class="plant-card hidden">
     <img id="plantImage" src="" alt="">
@@ -79,6 +76,27 @@
   </div>
 </section>
 
+<!-- DIY PROJECTS TAB -->
+<section class="diy-section">
+  <h2>DIY Garden Projects</h2>
+  <p class="subtitle">Try these simple projects to enhance your garden space</p>
+
+  <div class="diy-buttons">
+    <button onclick="showDIY('birdFeeder')">Build a Hummingbird Feeder</button>
+    <button onclick="showDIY('planterBox')">DIY Planter Box</button>
+    <button onclick="showDIY('gardenMarker')">Garden Plant Markers</button>
+  </div>
+
+  <div id="diyCard" class="plant-card hidden">
+    <h3 id="diyTitle"></h3>
+    <p id="diyDescription"></p>
+    <ul id="diyMaterials"></ul>
+  </div>
+</section>
+
+<!-- AUDIO FOR HECTOR -->
+<audio id="hectorAudio" src="luvvoice.com-20260210-6lsylk.mp3"></audio>
+
 <script>
 const plants = {
   beebalm: {
@@ -90,7 +108,10 @@ const plants = {
     soil: "Moist, well-drained soil",
     care: "Medium",
     aisle: "Garden Center – Perennials",
-    products: [{ name: "Miracle-Gro Moisture Control Potting Mix", url: "https://www.homedepot.com" }]
+    products: [
+      { name: "Miracle-Gro Moisture Control Potting Mix", url: "https://www.homedepot.com" },
+      { name: "Scotts Premium All-Purpose Fertilizer", url: "https://www.homedepot.com" }
+    ]
   },
   salvia: {
     name: "Salvia",
@@ -101,7 +122,9 @@ const plants = {
     soil: "Well-drained soil",
     care: "Low",
     aisle: "Garden Center – Perennials",
-    products: [{ name: "Miracle-Gro Garden Soil for Flowers", url: "https://www.homedepot.com" }]
+    products: [
+      { name: "Miracle-Gro Garden Soil for Flowers", url: "https://www.homedepot.com" }
+    ]
   },
   columbine: {
     name: "Columbine",
@@ -112,57 +135,88 @@ const plants = {
     soil: "Well-drained soil",
     care: "Low",
     aisle: "Garden Center – Shade Plants",
-    products: [{ name: "Espoma Organic Flower Fertilizer", url: "https://www.homedepot.com" }]
+    products: [
+      { name: "Espoma Organic Flower Fertilizer", url: "https://www.homedepot.com" }
+    ]
   },
   zinnia: {
     name: "Zinnia",
     image: "plants/zinnia.jpg",
-    why: "Bright, bold blooms that hummingbirds spot instantly.",
+    why: "Easy annuals that provide consistent nectar.",
     sun: "Full sun",
-    water: "Moderate",
-    soil: "Well-drained soil",
+    water: "Low",
+    soil: "Average garden soil",
     care: "Low",
     aisle: "Garden Center – Annuals",
-    products: [{ name: "Scotts Flower Food", url: "https://www.homedepot.com" }]
+    products: [
+      { name: "Miracle-Gro Garden Soil for Flowers", url: "https://www.homedepot.com" }
+    ]
   },
   agastache: {
     name: "Hummingbird Mint (Agastache)",
     image: "plants/agastache.jpg",
-    why: "Minty-scented flowers packed with nectar.",
+    why: "Minty foliage and tall blooms attract pollinators.",
     sun: "Full sun",
     water: "Low",
     soil: "Well-drained soil",
     care: "Low",
     aisle: "Garden Center – Perennials",
-    products: [{ name: "Miracle-Gro Perlite", url: "https://www.homedepot.com" }]
+    products: [
+      { name: "Espoma Organic Flower Fertilizer", url: "https://www.homedepot.com" }
+    ]
   },
   fuchsia: {
     name: "Fuchsia",
     image: "plants/fuchsia.jpg",
-    why: "Dangling blooms are a hummingbird favorite.",
+    why: "Pendant flowers are a hummingbird favorite.",
     sun: "Partial shade",
-    water: "Regular",
-    soil: "Moist, well-drained soil",
+    water: "Consistent moisture",
+    soil: "Rich, well-drained soil",
     care: "Medium",
-    aisle: "Garden Center – Hanging Plants",
-    products: [{ name: "Moisture Control Potting Mix", url: "https://www.homedepot.com" }]
+    aisle: "Garden Center – Hanging Baskets",
+    products: [
+      { name: "Homer Hanging Basket Planter", url: "https://www.homedepot.com" }
+    ]
   },
   cardinal: {
     name: "Cardinal Flower",
     image: "plants/cardinal.jpg",
-    why: "Intense red spikes act like nectar beacons.",
+    why: "Brilliant red blooms are irresistible to hummingbirds.",
     sun: "Partial shade",
     water: "High",
     soil: "Moist soil",
     care: "Medium",
     aisle: "Garden Center – Native Plants",
-    products: [{ name: "Organic Compost", url: "https://www.homedepot.com" }]
+    products: [
+      { name: "CEDAR Mulch 2 cu. ft. Bag", url: "https://www.homedepot.com" }
+    ]
   }
 };
 
+// DIY Projects Data
+const diyProjects = {
+  birdFeeder: {
+    title: "Build a Hummingbird Feeder",
+    description: "Create a simple DIY feeder to attract hummingbirds using bottles, sticks, and sugar water.",
+    materials: ["Glass bottle", "Wooden sticks", "Red paint", "Sugar water"]
+  },
+  planterBox: {
+    title: "DIY Planter Box",
+    description: "Build a custom planter box to grow flowers and vegetables in your garden.",
+    materials: ["Wood planks", "Screws", "Drill", "Sandpaper", "Paint"]
+  },
+  gardenMarker: {
+    title: "Garden Plant Markers",
+    description: "Make simple plant markers to label your garden plants.",
+    materials: ["Wooden sticks", "Permanent markers", "Paint", "Sealer"]
+  }
+};
+
+// Functions
 function showPlant(id, event) {
   const p = plants[id];
   document.getElementById("plantCard").classList.remove("hidden");
+  document.getElementById("diyCard").classList.add("hidden");
 
   document.getElementById("plantImage").src = p.image;
   document.getElementById("plantName").innerText = p.name;
@@ -199,12 +253,31 @@ function filterPlants(type) {
   });
 }
 
-function playHectorVoice() {
-  const audio = document.getElementById("hectorVoice");
-  audio.currentTime = 0;
-  audio.play();
-}
-</script>
+function showDIY(id) {
+  const project = diyProjects[id];
+  document.getElementById("diyCard").classList.remove("hidden");
+  document.getElementById("plantCard").classList.add("hidden");
 
+  document.getElementById("diyTitle").innerText = project.title;
+  document.getElementById("diyDescription").innerText = project.description;
+
+  const materialList = document.getElementById("diyMaterials");
+  materialList.innerHTML = "";
+  project.materials.forEach(item => {
+    const li = document.createElement("li");
+    li.innerText = item;
+    materialList.appendChild(li);
+  });
+
+  document.getElementById("hectorText").innerText =
+    "Try this DIY project in your garden: " + project.title + "!";
+}
+
+// Play Hector audio when bird image is clicked
+document.getElementById("hectorBird").addEventListener("click", () => {
+  const audio = document.getElementById("hectorAudio");
+  audio.play();
+});
+</script>
 </body>
 </html>
