@@ -8,7 +8,7 @@ body {
 
 /* -------------------- BRAND BAR -------------------- */
 .brand-bar {
-  background: #f96302;
+  background: #f96302; /* Home Depot orange */
   color: white;
   font-size: 12px;
   padding: 6px;
@@ -18,34 +18,32 @@ body {
 
 /* -------------------- LOGO -------------------- */
 .logo-container {
-  padding: 10px 20px;
-}
-
-.logo-container a {
-  display: inline-block;
+  position: relative;
+  padding: 10px 20px; /* top and left spacing */
 }
 
 .logo-container img {
-  width: 80px;
+  width: 80px; /* logo size */
   display: block;
-  cursor: pointer;
   transition: width 0.3s ease;
 }
 
-/* -------------------- HERO -------------------- */
+/* -------------------- HERO SECTION -------------------- */
 .hero {
   padding: 20px;
-  text-align: center;
+  text-align: center; /* center hero content */
 }
 
 .subtitle {
   color: #666;
+  font-size: 1em;
   margin-bottom: 15px;
 }
 
 .hector {
   width: 180px;
   margin: 15px 0;
+  cursor: pointer; /* clickable for audio */
 }
 
 /* -------------------- SPEECH BUBBLE -------------------- */
@@ -55,24 +53,25 @@ body {
   padding: 15px;
   border-radius: 10px;
   max-width: 420px;
-  margin: 0 auto 20px;
+  margin: 0 auto 20px auto;
   font-style: italic;
-  line-height: 1.5;
 }
 
-/* -------------------- BUTTONS -------------------- */
+/* -------------------- FILTER & PLANT BUTTONS -------------------- */
 .filters,
-.plant-buttons {
-  text-align: center;
+.plant-buttons,
+.diy-buttons {
+  text-align: center; /* center buttons */
   margin-bottom: 20px;
 }
 
 .filters button,
-.plant-buttons button {
+.plant-buttons button,
+.diy-buttons button {
   margin: 5px;
   padding: 10px 15px;
   border: none;
-  background: #333;
+  background: #333;      /* dark gray default */
   color: white;
   cursor: pointer;
   border-radius: 4px;
@@ -80,37 +79,29 @@ body {
 }
 
 .filters button:hover,
-.plant-buttons button:hover {
-  background: #f96302;
+.plant-buttons button:hover,
+.diy-buttons button:hover {
+  background: #f96302;   /* Home Depot orange on hover */
 }
 
 .plant-buttons .active {
   background: #f96302;
 }
 
-.filters button:active,
-.plant-buttons button:active {
-  transform: scale(0.97);
-}
-
-button:focus {
-  outline: 3px solid #f96302;
-  outline-offset: 2px;
-}
-
-/* -------------------- PLANT CARD -------------------- */
-.info-section {
+/* -------------------- PLANT INFO CARD -------------------- */
+.info-section,
+.diy-section {
   padding: 20px;
 }
 
 .plant-card {
   max-width: 420px;
-  margin: 0 auto;
+  margin: 0 auto 30px auto;
   background: #fafafa;
   padding: 20px;
   border-radius: 8px;
   border: 2px solid #f96302;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  text-align: left;
 }
 
 .plant-card img {
@@ -121,13 +112,34 @@ button:focus {
 
 .plant-card ul {
   list-style: none;
-  padding: 0;
+  padding-left: 0;
+  margin: 10px 0;
 }
 
-/* -------------------- RECOMMENDED PRODUCTS -------------------- */
-.recommended-products h3 {
-  color: #f96302;
+.plant-card li {
   margin-bottom: 8px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+}
+
+.plant-card li img {
+  margin-left: 5px;
+}
+
+/* Recommended products styling */
+.recommended-products {
+  margin-top: 15px;
+}
+
+.recommended-products h3 {
+  margin-bottom: 8px;
+  font-size: 1.1em;
+  color: #f96302;
+}
+
+.recommended-products ul {
+  padding-left: 0;
 }
 
 .recommended-products li {
@@ -138,37 +150,98 @@ button:focus {
 .recommended-products a {
   text-decoration: none;
   color: #333;
+  transition: color 0.3s;
 }
 
 .recommended-products a:hover {
   color: #f96302;
 }
 
-/* -------------------- UTILITIES -------------------- */
+/* Hide cards initially */
 .hidden {
   display: none;
 }
 
+/* Plant availability */
 .availability {
   font-size: 12px;
   color: #777;
+  margin-top: 10px;
   text-align: center;
+}
+
+/* -------------------- DIY PROJECTS SECTION -------------------- */
+.diy-section h2 {
+  text-align: center;
+  color: #f96302;
+  margin-bottom: 5px;
+}
+
+.diy-section .subtitle {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1em;
+  color: #666;
+}
+
+.diy-buttons {
+  margin-bottom: 20px;
+}
+
+.diy-buttons button {
+  width: auto;
+}
+
+/* DIY card uses same style as plant card */
+#diyCard {
+  max-width: 420px;
+  margin: 0 auto 30px auto;
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #f96302;
+}
+
+#diyCard ul {
+  padding-left: 0;
   margin-top: 10px;
 }
 
-/* -------------------- MOBILE -------------------- */
+#diyCard li {
+  margin-bottom: 6px;
+}
+
+/* -------------------- MOBILE RESPONSIVE -------------------- */
 @media (max-width: 600px) {
   .hector {
     width: 140px;
   }
 
-  .speech-bubble,
-  .plant-card {
+  .speech-bubble {
+    max-width: 90%;
+  }
+
+  .plant-card,
+  #diyCard {
     max-width: 90%;
   }
 
   .filters button,
-  .plant-buttons button {
+  .plant-buttons button,
+  .diy-buttons button {
     width: 80%;
+    margin: 5px auto;
+  }
+
+  .plant-card li,
+  #diyCard li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .plant-card li img,
+  #diyCard li img {
+    margin-left: 0;
+    margin-top: 2px;
   }
 }
