@@ -8,29 +8,41 @@
 </head>
 <body>
 
+<!-- ORANGE BRAND BAR -->
 <header class="brand-bar">#1 Home Improvement Retailer</header>
 
+<!-- LOGO -->
 <div class="logo-container">
   <a href="https://www.homedepot.com" target="_blank" aria-label="Go to Home Depot homepage">
     <img id="logo" src="home-depot-logo.png" alt="The Home Depot Logo">
   </a>
 </div>
 
+<!-- HERO SECTION -->
 <section class="hero">
   <h1>Garden Center Plant Guide</h1>
   <p class="subtitle">Meet Hector Nectar, your hummingbird plant guide</p>
-  <img class="hector" src="hector-hummingbird.png.jpg" alt="Hector the Hummingbird">
+
+  <img class="hector"
+       src="hector-hummingbird.png.jpg"
+       alt="Hector the Hummingbird"
+       onclick="playHectorVoice()">
+
+  <audio id="hectorVoice" src="luvvoice.com-20260210-6lsylk.mp3"></audio>
+
   <div id="hectorText" class="speech-bubble">
     Tap a plant below to learn how to glow up your garden.
   </div>
 </section>
 
+<!-- FILTER BUTTONS -->
 <section class="filters">
   <button onclick="filterPlants('all')">All Plants</button>
   <button onclick="filterPlants('sun')">Full Sun</button>
   <button onclick="filterPlants('shade')">Partial Shade</button>
 </section>
 
+<!-- PLANT BUTTONS -->
 <section class="plant-buttons">
   <button data-sun="sun" onclick="showPlant('beebalm', event)">Bee Balm</button>
   <button data-sun="sun" onclick="showPlant('salvia', event)">Salvia</button>
@@ -41,6 +53,7 @@
   <button data-sun="shade" onclick="showPlant('cardinal', event)">Cardinal Flower</button>
 </section>
 
+<!-- INFO CARD -->
 <section class="info-section">
   <div id="plantCard" class="plant-card hidden">
     <img id="plantImage" src="" alt="">
@@ -185,8 +198,13 @@ function filterPlants(type) {
       type === "all" || btn.dataset.sun === type ? "inline-block" : "none";
   });
 }
+
+function playHectorVoice() {
+  const audio = document.getElementById("hectorVoice");
+  audio.currentTime = 0;
+  audio.play();
+}
 </script>
 
 </body>
 </html>
-
