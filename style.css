@@ -8,7 +8,7 @@ body {
 
 /* -------------------- BRAND BAR -------------------- */
 .brand-bar {
-  background: #f96302; /* Home Depot orange */
+  background: #f96302;
   color: white;
   font-size: 12px;
   padding: 6px;
@@ -18,25 +18,28 @@ body {
 
 /* -------------------- LOGO -------------------- */
 .logo-container {
-  position: relative;
-  padding: 10px 20px; /* spacing from left */
+  padding: 10px 20px;
+}
+
+.logo-container a {
+  display: inline-block;
 }
 
 .logo-container img {
-  width: 80px; /* default logo size */
+  width: 80px;
   display: block;
+  cursor: pointer;
   transition: width 0.3s ease;
 }
 
-/* -------------------- HERO SECTION -------------------- */
+/* -------------------- HERO -------------------- */
 .hero {
   padding: 20px;
-  text-align: center; /* center hero content */
+  text-align: center;
 }
 
 .subtitle {
   color: #666;
-  font-size: 1em;
   margin-bottom: 15px;
 }
 
@@ -52,15 +55,15 @@ body {
   padding: 15px;
   border-radius: 10px;
   max-width: 420px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 20px;
   font-style: italic;
+  line-height: 1.5;
 }
 
-/* -------------------- FILTER & PLANT BUTTONS -------------------- */
-/* Center all buttons */
+/* -------------------- BUTTONS -------------------- */
 .filters,
 .plant-buttons {
-  text-align: center; /* ensures buttons are centered */
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -69,7 +72,7 @@ body {
   margin: 5px;
   padding: 10px 15px;
   border: none;
-  background: #333;      /* dark gray default */
+  background: #333;
   color: white;
   cursor: pointer;
   border-radius: 4px;
@@ -78,14 +81,24 @@ body {
 
 .filters button:hover,
 .plant-buttons button:hover {
-  background: #f96302;   /* Home Depot orange on hover */
+  background: #f96302;
 }
 
 .plant-buttons .active {
   background: #f96302;
 }
 
-/* -------------------- PLANT INFO SECTION -------------------- */
+.filters button:active,
+.plant-buttons button:active {
+  transform: scale(0.97);
+}
+
+button:focus {
+  outline: 3px solid #f96302;
+  outline-offset: 2px;
+}
+
+/* -------------------- PLANT CARD -------------------- */
 .info-section {
   padding: 20px;
 }
@@ -97,7 +110,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   border: 2px solid #f96302;
-  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .plant-card img {
@@ -108,34 +121,13 @@ body {
 
 .plant-card ul {
   list-style: none;
-  padding-left: 0;
-  margin: 10px 0;
+  padding: 0;
 }
 
-.plant-card li {
-  margin-bottom: 8px;
-  line-height: 1.4;
-  display: flex;
-  align-items: center; /* align text with logo */
-}
-
-.plant-card li img {
-  margin-left: 5px;  /* spacing between product text and logo */
-}
-
-/* Recommended products styling */
-.recommended-products {
-  margin-top: 15px;
-}
-
+/* -------------------- RECOMMENDED PRODUCTS -------------------- */
 .recommended-products h3 {
-  margin-bottom: 8px;
-  font-size: 1.1em;
   color: #f96302;
-}
-
-.recommended-products ul {
-  padding-left: 0;
+  margin-bottom: 8px;
 }
 
 .recommended-products li {
@@ -143,40 +135,34 @@ body {
   margin-bottom: 6px;
 }
 
-/* Hover effect for links */
 .recommended-products a {
   text-decoration: none;
   color: #333;
-  transition: color 0.3s;
 }
 
 .recommended-products a:hover {
   color: #f96302;
 }
 
-/* Hide plant card initially */
+/* -------------------- UTILITIES -------------------- */
 .hidden {
   display: none;
 }
 
-/* Plant availability */
 .availability {
   font-size: 12px;
   color: #777;
-  margin-top: 10px;
   text-align: center;
+  margin-top: 10px;
 }
 
-/* -------------------- MOBILE RESPONSIVE -------------------- */
+/* -------------------- MOBILE -------------------- */
 @media (max-width: 600px) {
   .hector {
     width: 140px;
   }
 
-  .speech-bubble {
-    max-width: 90%;
-  }
-
+  .speech-bubble,
   .plant-card {
     max-width: 90%;
   }
@@ -184,16 +170,5 @@ body {
   .filters button,
   .plant-buttons button {
     width: 80%;
-    margin: 5px auto;
-  }
-
-  .plant-card li {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .plant-card li img {
-    margin-left: 0;
-    margin-top: 2px;
   }
 }
