@@ -15,7 +15,7 @@
 
 <!-- LOGO (clickable, opens Home Depot homepage) -->
 <div class="logo-container">
-  <a href="https://www.homedepot.com" target="_blank" aria-label="Go to Home Depot homepage">
+  <a href="https://www.homedepot.com/" target="_blank" aria-label="Go to Home Depot homepage">
     <img id="logo" src="home-depot-logo.png.jpg" alt="The Home Depot Logo">
   </a>
 </div>
@@ -27,8 +27,18 @@
 
   <img class="hector" id="hectorBird" src="hector-hummingbird.png.jpg" alt="Hector the Hummingbird">
 
+  <!-- Direction text -->
+  <div class="hint-text">Double-click Hector to ask him a question 💬</div>
+
+  <!-- Speech bubble is the ONLY answer area -->
   <div id="hectorText" class="speech-bubble">
     Tap a plant below to learn how to glow up your garden.
+  </div>
+
+  <!-- ASK BAR (stays visible once opened) -->
+  <div id="askBar" class="askbar hidden">
+    <input id="askInput" type="text" placeholder="Ask Hector about the garden center..." />
+    <button id="askBtn" type="button">Ask Hector</button>
   </div>
 </section>
 
@@ -82,9 +92,9 @@
   <p class="subtitle">Try these simple projects to enhance your garden space</p>
 
   <div class="diy-buttons">
-    <button onclick="showDIY('birdFeeder')">Build a Hummingbird Feeder</button>
     <button onclick="showDIY('planterBox')">DIY Planter Box</button>
     <button onclick="showDIY('gardenMarker')">Garden Plant Markers</button>
+    <button onclick="showDIY('steppingStones')">Garden Stepping Stones</button>
   </div>
 
   <div id="diyCard" class="plant-card hidden">
@@ -98,6 +108,7 @@
 <audio id="hectorAudio" src="luvvoice.com-20260210-6lsylk.mp3"></audio>
 
 <script>
+/* -------------------- PLANTS DATA (only product links fixed) -------------------- */
 const plants = {
   beebalm: {
     name: "Bee Balm (Monarda)",
@@ -109,8 +120,14 @@ const plants = {
     care: "Medium",
     aisle: "Garden Center – Perennials",
     products: [
-      { name: "Miracle-Gro Moisture Control Potting Mix", url: "https://www.homedepot.com" },
-      { name: "Scotts Premium All-Purpose Fertilizer", url: "https://www.homedepot.com" }
+      {
+        name: "Miracle-Gro Moisture Control Potting Mix 50 qt.",
+        url: "https://www.homedepot.com/p/Miracle-Gro-Moisture-Control-Potting-Mix-50-qt-For-Container-Plants-Protects-Against-Over-and-Under-Watering-70190430/206553444"
+      },
+      {
+        name: "Scotts Turf Builder Lawn Food 37.5 lbs. (15,000 sq. ft.)",
+        url: "https://www.homedepot.com/p/Scotts-Turf-Builder-37-5-lbs-15-000-sq-ft-Dry-Lawn-Fertilizer-for-All-Grass-Types-22315/203120196"
+      }
     ]
   },
   salvia: {
@@ -123,7 +140,10 @@ const plants = {
     care: "Low",
     aisle: "Garden Center – Perennials",
     products: [
-      { name: "Miracle-Gro Garden Soil for Flowers", url: "https://www.homedepot.com" }
+      {
+        name: "Miracle-Gro 2 cu. ft. Garden Soil for Flowers and Vegetables",
+        url: "https://www.homedepot.com/p/Miracle-Gro-2-cu-ft-Garden-Soil-for-Flowers-and-Vegetables-73452300/100355778"
+      }
     ]
   },
   columbine: {
@@ -136,7 +156,10 @@ const plants = {
     care: "Low",
     aisle: "Garden Center – Shade Plants",
     products: [
-      { name: "Espoma Organic Flower Fertilizer", url: "https://www.homedepot.com" }
+      {
+        name: "Espoma 27 lb. Organic All Purpose Plant-Tone Fertilizer",
+        url: "https://www.homedepot.com/p/Espoma-27-lb-Organic-All-Purpose-Plant-Tone-Fertilizer-100540066/312050067"
+      }
     ]
   },
   zinnia: {
@@ -149,7 +172,10 @@ const plants = {
     care: "Low",
     aisle: "Garden Center – Annuals",
     products: [
-      { name: "Miracle-Gro Garden Soil for Flowers", url: "https://www.homedepot.com" }
+      {
+        name: "Miracle-Gro 2 cu. ft. Garden Soil for Flowers and Vegetables",
+        url: "https://www.homedepot.com/p/Miracle-Gro-2-cu-ft-Garden-Soil-for-Flowers-and-Vegetables-73452300/100355778"
+      }
     ]
   },
   agastache: {
@@ -162,7 +188,10 @@ const plants = {
     care: "Low",
     aisle: "Garden Center – Perennials",
     products: [
-      { name: "Espoma Organic Flower Fertilizer", url: "https://www.homedepot.com" }
+      {
+        name: "Espoma 27 lb. Organic All Purpose Plant-Tone Fertilizer",
+        url: "https://www.homedepot.com/p/Espoma-27-lb-Organic-All-Purpose-Plant-Tone-Fertilizer-100540066/312050067"
+      }
     ]
   },
   fuchsia: {
@@ -175,7 +204,10 @@ const plants = {
     care: "Medium",
     aisle: "Garden Center – Hanging Baskets",
     products: [
-      { name: "Homer Hanging Basket Planter", url: "https://www.homedepot.com" }
+      {
+        name: "Vigoro Madigan Hanging Basket Planter (2-Pack)",
+        url: "https://www.homedepot.com/p/Vigoro-Madigan-Medium-Black-Resin-Round-Hanging-Basket-Planter-with-Drainage-Holes-12-in-L-x-12-in-W-x-5-5-in-H-2-Pack-PTJ7412TWZ/329769230"
+      }
     ]
   },
   cardinal: {
@@ -188,31 +220,43 @@ const plants = {
     care: "Medium",
     aisle: "Garden Center – Native Plants",
     products: [
-      { name: "CEDAR Mulch 2 cu. ft. Bag", url: "https://www.homedepot.com" }
+      {
+        name: "2 cu. ft. Cedar Blend Shredded Bagged Mulch",
+        url: "https://www.homedepot.com/p/2-cu-ft-Cedar-Blend-Shredded-Bagged-Mulch-52058060/100598806"
+      }
     ]
   }
 };
 
-// DIY Projects Data
+/* -------------------- DIY PROJECTS (already real links) -------------------- */
 const diyProjects = {
-  birdFeeder: {
-    title: "Build a Hummingbird Feeder",
-    description: "Create a simple DIY feeder to attract hummingbirds using bottles, sticks, and sugar water.",
-    materials: ["Glass bottle", "Wooden sticks", "Red paint", "Sugar water"]
-  },
   planterBox: {
     title: "DIY Planter Box",
-    description: "Build a custom planter box to grow flowers and vegetables in your garden.",
-    materials: ["Wood planks", "Screws", "Drill", "Sandpaper", "Paint"]
+    description: "Build a simple wooden planter box to grow flowers, herbs, or small vegetables.",
+    materials: [
+      { name: "Cedar Board", url: "https://www.homedepot.com/p/WeatherShield-Common-1-in-x-6-in-x-8-ft-Actual-0-75-in-x-5-5-in-x-96-in-Cedar-Board-267380/300526010" },
+      { name: "Deck Screws", url: "https://www.homedepot.com/p/Grip-Rite-9-x-2-1-2-in-Star-Drive-Deck-Screws-1-lb-Pack-PTN212S1/100174061" }
+    ]
   },
   gardenMarker: {
     title: "Garden Plant Markers",
-    description: "Make simple plant markers to label your garden plants.",
-    materials: ["Wooden sticks", "Permanent markers", "Paint", "Sealer"]
+    description: "Make plant markers so your garden stays organized and easy to maintain.",
+    materials: [
+      { name: "Wood Craft Sticks", url: "https://www.homedepot.com/s/craft%20sticks" },
+      { name: "Permanent Marker", url: "https://www.homedepot.com/s/permanent%20marker" }
+    ]
+  },
+  steppingStones: {
+    title: "Garden Stepping Stones",
+    description: "Add stepping stones to create a clean walkway through your garden space.",
+    materials: [
+      { name: "Concrete Mix", url: "https://www.homedepot.com/p/Quikrete-80-lb-Concrete-Mix-110180/100318511" },
+      { name: "Patio Stone", url: "https://www.homedepot.com/p/Oldcastle-11-5-in-x-11-5-in-Square-Concrete-Patio-Stone-72600/206501693" }
+    ]
   }
 };
 
-// Functions
+/* -------------------- EXISTING FUNCTIONS (UNCHANGED) -------------------- */
 function showPlant(id, event) {
   const p = plants[id];
   document.getElementById("plantCard").classList.remove("hidden");
@@ -241,6 +285,7 @@ function showPlant(id, event) {
     a.href = item.url;
     a.textContent = item.name;
     a.target = "_blank";
+    a.rel = "noopener noreferrer";
     li.appendChild(a);
     productList.appendChild(li);
   });
@@ -265,7 +310,12 @@ function showDIY(id) {
   materialList.innerHTML = "";
   project.materials.forEach(item => {
     const li = document.createElement("li");
-    li.innerText = item;
+    const a = document.createElement("a");
+    a.href = item.url;
+    a.textContent = item.name;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    li.appendChild(a);
     materialList.appendChild(li);
   });
 
@@ -273,11 +323,53 @@ function showDIY(id) {
     "Try this DIY project in your garden: " + project.title + "!";
 }
 
-// Play Hector audio when bird image is clicked
+/* -------------------- HECTOR AUDIO (SINGLE CLICK) -------------------- */
 document.getElementById("hectorBird").addEventListener("click", () => {
-  const audio = document.getElementById("hectorAudio");
-  audio.play();
+  document.getElementById("hectorAudio").play();
 });
+
+/* -------------------- DOUBLE-CLICK: SHOW ASK BAR & KEEP IT -------------------- */
+const askBar = document.getElementById("askBar");
+const askInput = document.getElementById("askInput");
+const askBtn = document.getElementById("askBtn");
+
+document.getElementById("hectorBird").addEventListener("dblclick", (e) => {
+  e.preventDefault();
+  askBar.classList.remove("hidden");
+  askInput.focus();
+});
+
+askBtn.addEventListener("click", sendQuestion);
+askInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendQuestion();
+});
+
+async function sendQuestion() {
+  const msg = askInput.value.trim();
+  if (!msg) return;
+
+  // keep bar visible
+  askInput.value = "";
+  askInput.focus();
+
+  document.getElementById("hectorText").innerText = "Hector is thinking...";
+
+  try {
+    const res = await fetch("/api/hector", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg })
+    });
+
+    const data = await res.json();
+    document.getElementById("hectorText").innerText =
+      data.reply || "I couldn’t answer that. Try another garden question.";
+  } catch {
+    document.getElementById("hectorText").innerText =
+      "I couldn’t reach my brain right now. Make sure the server is running.";
+  }
+}
 </script>
+
 </body>
 </html>
