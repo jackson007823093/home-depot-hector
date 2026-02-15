@@ -6,6 +6,16 @@ body {
   color: #333;
 }
 
+/* ✅ LINKS: look like normal text (no blue, no underline) */
+a, a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: #f96302; /* subtle Home Depot hover */
+  text-decoration: none;
+}
+
 /* -------------------- BRAND BAR -------------------- */
 .brand-bar {
   background: #f96302; /* Home Depot orange */
@@ -46,6 +56,14 @@ body {
   cursor: pointer; /* clickable for audio */
 }
 
+/* small direction text */
+.hint-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
 /* -------------------- SPEECH BUBBLE -------------------- */
 .speech-bubble {
   background: #f5f5f5;
@@ -53,8 +71,46 @@ body {
   padding: 15px;
   border-radius: 10px;
   max-width: 420px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 12px auto;
   font-style: italic;
+}
+
+/* ask bar */
+.askbar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto 10px auto;
+  max-width: 520px;
+}
+
+.askbar input {
+  width: 260px;
+  max-width: 70%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+.askbar input:focus {
+  border-color: #f96302;
+  box-shadow: 0 0 0 3px rgba(249, 99, 2, 0.15);
+}
+
+.askbar button {
+  border: none;
+  background: #f96302;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.askbar button:hover {
+  background: #e25500;
 }
 
 /* -------------------- FILTER & PLANT BUTTONS -------------------- */
@@ -147,16 +203,6 @@ body {
   margin-bottom: 6px;
 }
 
-.recommended-products a {
-  text-decoration: none;
-  color: #333;
-  transition: color 0.3s;
-}
-
-.recommended-products a:hover {
-  color: #f96302;
-}
-
 /* Hide cards initially */
 .hidden {
   display: none;
@@ -223,6 +269,16 @@ body {
 
   .plant-card,
   #diyCard {
+    max-width: 90%;
+  }
+
+  .askbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .askbar input {
+    width: 80%;
     max-width: 90%;
   }
 
